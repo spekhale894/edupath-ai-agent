@@ -1,1 +1,79 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<title>EduPath AI Agent</title>
+<style>
+body{font-family:Arial;background:#f4f7ff;margin:0;padding:25px}
+.box{max-width:700px;margin:auto;background:white;padding:25px;border-radius:15px}
+input,textarea,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box}
+button{background:#3157d5;color:white;border:0;border-radius:8px;font-size:16px}
+.result{background:#eef2ff;padding:15px;border-radius:10px;margin-top:15px}
+</style>
+</head>
+
+<body>
+<div class="box">
+<h1>🎓 EduPath AI Agent</h1>
+<p>Personalized Learning & Skill Gap Assistant</p>
+
+<label>Current Skills</label>
+<textarea id="skills" placeholder="Example: Java, HTML, SQL"></textarea>
+
+<label>Target Role</label>
+<input id="role" placeholder="Example: Java Developer">
+
+<label>Career Goal</label>
+<textarea id="goal" placeholder="Example: Become job-ready in backend development"></textarea>
+
+<button onclick="createPlan()">Analyze My Learning Path</button>
+
+<div id="result"></div>
+</div>
+
+<script>
+function createPlan(){
+let skills=document.getElementById("skills").value.toLowerCase();
+let role=document.getElementById("role").value;
+let goal=document.getElementById("goal").value;
+
+let gaps=[];
+
+if(!skills.includes("java")) gaps.push("Java fundamentals");
+if(!skills.includes("sql")) gaps.push("SQL and databases");
+if(!skills.includes("git")) gaps.push("Git and GitHub");
+if(!skills.includes("spring")) gaps.push("Spring Boot");
+if(!skills.includes("api")) gaps.push("REST APIs");
+
+if(gaps.length==0)
+gaps=["Advanced Java","Spring Boot","REST APIs","Git & GitHub","Backend project"];
+
+document.getElementById("result").innerHTML=`
+<div class="result">
+<h2>📊 Skill Gap Analysis</h2>
+<p><b>Target Role:</b> ${role}</p>
+<p><b>Goal:</b> ${goal}</p>
+
+<h3>Skills to Develop</h3>
+<ul>${gaps.map(x=>`<li>${x}</li>`).join("")}</ul>
+
+<h3>📅 Personalized 7-Day Plan</h3>
+<p>Day 1 → Learn ${gaps[0]}</p>
+<p>Day 2 → Practice ${gaps[0]}</p>
+<p>Day 3 → Learn ${gaps[1] || "Next skill"}</p>
+<p>Day 4 → Complete practice tasks</p>
+<p>Day 5 → Learn ${gaps[2] || "Advanced concepts"}</p>
+<p>Day 6 → Build a mini project</p>
+<p>Day 7 → Review progress and identify remaining gaps</p>
+
+<h3>🚀 Recommended Project</h3>
+<p>Build a small ${role || "career-related"} project using your newly learned skills.</p>
+
+<h3>🤖 Agent Action</h3>
+<p>EduPath analyzes your current profile, identifies gaps and generates a personalized learning journey.</p>
+</div>`;
+}
+</script>
+
+</body>
+</html>
